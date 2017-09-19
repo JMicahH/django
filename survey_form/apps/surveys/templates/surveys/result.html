@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'surveys/css/styles.css' %}">
+    <title>Django - Dojo Survey</title>
+</head>
+
+<body>
+
+    <div id='box'>
+        <p id="thankyou">Thanks for submitting this form! You have submitted this form {{ request.session.count }} time(s) now.</p>
+        <h2>
+            <u>Submitted Info</u>
+        </h2>
+        <div class="formleft">
+            Name:
+        </div>
+        <div class="formright">
+            {{ request.session.name }}
+        </div>
+
+        <div class="formleft">
+            Dojo Location:
+        </div>
+        <div class="formright">
+            {{ request.session.dojoloc }}
+        </div>
+
+        <div class="formleft">
+            Favorite Language:
+        </div>
+        <div class="formright">
+            {{ request.session.favlang }}
+        </div>
+
+        <div class="formleft">
+            Comment:
+        </div>
+        <div class="formright">
+            {{ request.session.comment }}
+        </div>
+
+        <a href="/"><button>Go Home</button></a>
+
+    </div>
+
+    </div>
+
+</body>
+
+</html>

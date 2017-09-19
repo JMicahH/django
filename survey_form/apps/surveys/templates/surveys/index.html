@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'surveys/css/styles.css' %}">
+    <title>Django - Dojo Survey</title>
+</head>
+<body>
+
+    <div id='box'>
+        <form action="/process" method="post">
+            {% csrf_token %}
+            <label class="formleft">
+                Your Name:</label>
+                <input type="text" name="name">
+            <label class="formleft">
+                Dojo Location: </label>
+                <select name="dojoloc">
+            <option value="Chicago">Chicago</option>
+            <option value="Seattle">Seattle</option>
+            <option value="Los Angeles">Los Angeles</option>
+        </select>
+            <label class="formleft">
+                Favorite Language:</label>
+                <select name="favlang">
+            <option value="Javascript">Javascript</option>
+            <option value="Python">Python</option>
+            <option value="C#">C#</option>
+        </select>
+            <label>
+                Comment (optional):</label><br>
+
+                <textarea name="comment"></textarea>
+
+            <input type="submit" value="Submit">
+        </form>
+
+    </div>
+
+</body>
+
+</html>
