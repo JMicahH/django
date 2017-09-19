@@ -1,0 +1,12 @@
+BODY{
+    margin: 20px auto;
+    font-family: Helvetica, Arial, sans-serif;
+    text-align: center;
+}
+
+#randomword{
+    font-size: 24px;
+    border: 1px dotted gray;
+    width: 500px;
+margin: 0px auto 20px;
+}
