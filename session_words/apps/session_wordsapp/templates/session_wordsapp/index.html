@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"> 
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'session_wordsapp/css/styles.css' %}">
+    <title>Session Words</title>
+</head>
+
+<body>
+    <div id="splitscreenleft">
+        <h3>Add a new word</h3>
+        <form action="/newword" method="POST">
+            {% csrf_token %}
+            <input type="text" name="newword"><br>
+
+            <label>
+                    Choose color:</label><br>
+            <input type="radio" name="color" value='red'>Red<br>
+            <input type="radio" name="color" value='blue'>Blue<br>
+            <input type="radio" name="color" value='green'>Green<br><br>
+
+            <input type="checkbox" name="fontsize" value="20px">Show in BIG font!
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <div id="splitscreenright" >
+        <a href="/clearsession" ><button>CLEAR</button></a><br><br> 
+        {% if request.session.activity %} 
+        {% for word in request.session.activity %}
+        <p><span style="font-size: {{word.fontsize}}; color: {{word.color}}">{{ word.newword }} </span> - added on {{ word.timestamp}}</p>
+        {% endfor %}
+        {% endif %}
+
+    </div>
+
+
+</body>
+
+</html>

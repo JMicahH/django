@@ -1,0 +1,20 @@
+BODY{
+    margin: 20px auto;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+#splitscreenleft {
+    display: inline-block;
+    width: 30%;
+    padding: 15px;
+    border-right: 1px solid gray;
+    min-height: 400px;
+    vertical-align: top;
+}
+
+#splitscreenright {
+    display: inline-block;
+    width: 45%;
+    padding: 15px;
+    vertical-align: top;
+}
