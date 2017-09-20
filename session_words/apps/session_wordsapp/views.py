@@ -10,22 +10,25 @@ def index(request):
     return render(request, 'session_wordsapp/index.html')
 
 def newword(request):
-    request.session['newword'] = request.POST['newword']
-    request.session['color'] = request.POST['color']
-    request.session['fontsize'] = request.POST.get('fontsize', "14px")
-
-    request.session['timestamp'] = strftime("%H:%M:%S %p, %B %d %Y", gmtime())
+    # request.session['newword'] = request.POST['newword']
+    # request.session['color'] = request.POST['color']
+    # request.session['fontsize'] = request.POST.get('fontsize', "14px")
+    # request.session['timestamp'] = strftime("%H:%M:%S %p, %B %d %Y", gmtime())
+    print "BEFORE:::" 
+    print request.session['activity']
 
     newword = {
-        "newword"   : request.session['newword'], 
-        "color"     : request.session['color'], 
-        "fontsize"  : request.session['fontsize'],
-        "timestamp" : request.session['timestamp']
+        "newword"   : request.POST['newword'], 
+        "color"     : request.POST['color'], 
+        "fontsize"  : request.POST.get('fontsize', "14px"),
+        "timestamp" : strftime("%H:%M:%S %p, %B %d %Y", gmtime())
     }
 
     request.session['activity'].append(newword)
+    request.session.modified = True
+    
 
-
+    print "AFTER:::"
     print request.session['activity']
     return redirect('/')
 
