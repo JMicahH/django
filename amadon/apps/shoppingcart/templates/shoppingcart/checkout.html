@@ -18,8 +18,8 @@
 
     <h2>Thank you for your business!</h2>
 
-    <p>We've charged your credit card ${{ total }}.</p>
-    <p>You ordered {{quantity}} products so far and spent {{grandtotal}} with Amadon!</p>
+    <p>We've charged your credit card ${{ request.session.total }}.</p>
+    <p>You ordered {{ request.session.count }} products so far and spent ${{ request.session.grandtotal }} with Amadon!</p>
 
     <a href="/">Go Back</a>
 
