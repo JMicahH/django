@@ -1,0 +1,171 @@
+(djangoEnv) johnny-five:amadon johnnyfive$ python manage.py makemigrations
+System check identified some issues:
+
+WARNINGS:
+user_login.Users.age: (fields.W122) 'max_length' is ignored when used with IntegerField
+        HINT: Remove 'max_length' from field
+Migrations for 'dojo_ninjas':
+  apps/dojo_ninjas/migrations/0001_initial.py:
+    - Create model Dojo
+    - Create model Ninjas
+(djangoEnv) johnny-five:amadon johnnyfive$ python manage.py migrate
+System check identified some issues:
+
+WARNINGS:
+user_login.Users.age: (fields.W122) 'max_length' is ignored when used with IntegerField
+        HINT: Remove 'max_length' from field
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, dojo_ninjas, sessions, user_login
+Running migrations:
+  Rendering model states... DONE
+  Applying dojo_ninjas.0001_initial... OK
+(djangoEnv) johnny-five:amadon johnnyfive$ python manage.py makemigrations
+Migrations for 'user_login':
+  apps/user_login/migrations/0002_auto_20170922_1605.py:
+    - Alter field age on users
+(djangoEnv) johnny-five:amadon johnnyfive$ python manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, dojo_ninjas, sessions, user_login
+Running migrations:
+  Rendering model states... DONE
+  Applying user_login.0002_auto_20170922_1605... OK
+(djangoEnv) johnny-five:amadon johnnyfive$ python manage.py shell
+Python 2.7.10 (default, Feb  7 2017, 00:08:15)
+[GCC 4.2.1 Compatible Apple LLVM 8.0.0 (clang-800.0.34)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from apps.dojo_ninjas.models import *
+>>> Dojo.objects.create(name='CodingDojo Silicon Valley', city='Mountain View', state='CA')
+<Dojo: Dojo object>
+>>> Dojo.objects.create(name='CodingDojo Seattle', city='Seattle', state='WA')
+<Dojo: Dojo object>
+>>> Dojo.objects.create(name='CodingDojo New York', city="New York", state='NY')
+<Dojo: Dojo object>
+>>> Dojo.objects.create(name="CodingDojo Chicago", city="Chicago", state="IL")
+<Dojo: Dojo object>
+>>> Ninjas.objects.create(first_name='Dave', last_name="Levin", dojo=Dojo.objects.get(id=1))
+<Ninjas: Ninjas object>
+>>> Ninjas.objects.create(first_name='John', last_name="Hughes", dojo=Dojo.objects.get(id=2))
+<Ninjas: Ninjas object>
+>>> Ninjas.objects.create(first_name="Sarah", last_name="Silverman", dojo=Dojo.objects.get(id=3))
+<Ninjas: Ninjas object>
+>>> Dojo.objects.count()
+4
+>>> Dojo.objects.get(id=4).name
+u'CodingDojo Chicago'
+>>> Dojo.objects.get(id=4).name Dojo.objects.get(id=3).city
+  File "<console>", line 1
+    Dojo.objects.get(id=4).name Dojo.objects.get(id=3).city
+                                   ^
+SyntaxError: invalid syntax
+>>> Ninjas.objects.create(first_name='Michelle", last_name="Obama", dojo=Dojo.objects.get(id=2))
+  File "<console>", line 1
+    Ninjas.objects.create(first_name='Michelle", last_name="Obama", dojo=Dojo.objects.get(id=2))
+                                                                                               ^
+SyntaxError: EOL while scanning string literal
+>>> Ninjas.objects.create(first_name="Michelle", last_name="Obama", dojo=Dojo.objects.get(id=2))
+<Ninjas: Ninjas object>
+>>> Ninjas.objects.create(first_name="Martin", last_name="Scorsese", dojo=Dojo.objects.get(id=1))
+<Ninjas: Ninjas object>
+>>> Ninjas.objects.create(first_name="Arnold", last_name="Schwarzenegger", dojo=Dojo.objects.get(id=3))
+<Ninjas: Ninjas object>
+>>> Ninjas.objects.count()
+6
+>>> Dojo.objects.first().ninjas.all()
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: 'Dojo' object has no attribute 'ninjas'
+>>> Dojo.objects.first().Ninjas.all()
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: 'Dojo' object has no attribute 'Ninjas'
+>>> ^D
+(djangoEnv) johnny-five:amadon johnnyfive$ python manage.py shell
+Python 2.7.10 (default, Feb  7 2017, 00:08:15)
+[GCC 4.2.1 Compatible Apple LLVM 8.0.0 (clang-800.0.34)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from apps.dojo_ninjas.models import *
+>>> Dojo.objects.first()
+<Dojo: Dojo object>
+>>> Dojo.objects.first().ninjas.all()
+<QuerySet [<Ninjas: Ninjas object>, <Ninjas: Ninjas object>]>
+>>> Dojo.objects.first().ninjas.all().first_name
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: 'QuerySet' object has no attribute 'first_name'
+>>> b=Dojo.objects.first().ninjas.all()
+>>> b.first_name
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: 'QuerySet' object has no attribute 'first_name'
+>>> Ninjas.objects.first().dojo
+<Dojo: Dojo object>
+>>> Dojo.objects.get(id=1).delete()
+(3, {u'dojo_ninjas.Ninjas': 2, u'dojo_ninjas.Dojo': 1})
+>>> Dojo.objects.first()
+<Dojo: Dojo object>
+>>> b=Dojo.objects.get(id=1)
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+  File "/Users/johnnyfive/Desktop/DojoAssignments/myEnvironments/djangoEnv/lib/python2.7/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/johnnyfive/Desktop/DojoAssignments/myEnvironments/djangoEnv/lib/python2.7/site-packages/django/db/models/query.py", line 385, in get
+    self.model._meta.object_name
+DoesNotExist: Dojo matching query does not exist.
+>>> b=Dojo.objects.first()
+>>> b.name
+u'CodingDojo Seattle'
+>>> b.id
+2
+>>> c=Dojo.objects.get(id=3)
+>>> c.name
+u'CodingDojo New York'
+>>> c.ninjas
+<django.db.models.fields.related_descriptors.RelatedManager object at 0x10a47b1d0>
+>>> c.ninjas.first_name
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: 'RelatedManager' object has no attribute 'first_name'
+>>> c_ninjas=c.ninjas
+>>> c_ninjas.first().name
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: 'Ninjas' object has no attribute 'name'
+>>> c_ninjas.first().first_name
+u'Sarah'
+>>> c_ninjas.first().dojo
+<Dojo: Dojo object>
+>>> ^D
+(djangoEnv) johnny-five:amadon johnnyfive$ python manage.py makemigrations
+You are trying to add a non-nullable field 'desc' to dojo without a default; we can't do that (the database needs something to populate existing rows).
+Please select a fix:
+ 1) Provide a one-off default now (will be set on all existing rows with a null value for this column)
+ 2) Quit, and let me add a default in models.py
+Select an option: 1
+Please enter the default value now, as valid Python
+The datetime and django.utils.timezone modules are available, so you can do e.g. timezone.now
+Type 'exit' to exit this prompt
+>>> null
+Invalid input: name 'null' is not defined
+>>> Dojo Description
+Invalid input: unexpected EOF while parsing (<string>, line 1)
+>>> 'description'
+Migrations for 'dojo_ninjas':
+  apps/dojo_ninjas/migrations/0002_auto_20170922_1712.py:
+    - Add field desc to dojo
+    - Alter field dojo on ninjas
+(djangoEnv) johnny-five:amadon johnnyfive$ python manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, dojo_ninjas, sessions, user_login
+Running migrations:
+  Rendering model states... DONE
+  Applying dojo_ninjas.0002_auto_20170922_1712... OK
+(djangoEnv) johnny-five:amadon johnnyfive$ python manage.py shell
+Python 2.7.10 (default, Feb  7 2017, 00:08:15)
+[GCC 4.2.1 Compatible Apple LLVM 8.0.0 (clang-800.0.34)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from apps.dojo_ninjas.models import *
+>>> Dojo.objects.first().desc
+u'description'
