@@ -18,4 +18,6 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^', include('apps.shoppingcart.urls')),
+    url(r'^user_login', include('apps.user_login.urls')),
+    url(r'^dojo_ninjas', include('apps.dojo_ninjas.urls'))
 ]
