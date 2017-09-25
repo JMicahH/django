@@ -1,0 +1,16 @@
+BODY{
+    padding: 50px;
+    margin: 10px auto;
+}
+
+form {
+    margin-bottom: 80px;
+    width: 350px;
+}
+input {
+    float: right;
+}
+
+input:last-of-type{
+    float: left;
+}
