@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.core.urlresolvers import reverse
+from django.contrib.messages import error
 
 from models import *
 # Create your views here.
@@ -12,6 +13,14 @@ def new(request):
     return render(request, 'usersapp/new.html')
 
 def creation(request):
+    errors = Users.objects.validate(request.POST)
+    if len(errors):
+        for field, message in errors.iteritems():
+            error(request, message, extra_tags=field)
+
+        return redirect('add_user_page')
+
+
     first_name = request.POST['first_name']
     last_name = request.POST['last_name']
     email = request.POST['email']
@@ -30,7 +39,15 @@ def edit(request, id):
     return render(request, 'usersapp/edit.html', { 'chosen_user' : Users.objects.get(id=id) })
 
 
-def update(request):        
+def update(request):
+
+    errors = Users.objects.validate(request.POST)
+    if len(errors):
+        for field, message in errors.iteritems():
+            error(request, message, extra_tags=field)
+
+        return redirect('/users/{}/edit'.format(request.POST['id']))    
+
     chosen_user = Users.objects.get(id= int(request.POST['id']))
 
     chosen_user.first_name = request.POST['first_name']
